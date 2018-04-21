@@ -1,0 +1,18 @@
+{
+  "name": "fake-pinterest",
+  "version": "1.0.0",
+  "description": "A Pinterest-like sandbox enviroment",
+  "main": "app.js",
+  "keywords": [
+    "sandbox",
+    "pinterest"
+  ],
+  "scripts": {
+  	"start":"node app.js"
+  },
+  "author": "Lordscales91",
+  "license": "Apache 2.0",
+  "dependencies": {
+    "express": "4.16.3"
+  }
+}
