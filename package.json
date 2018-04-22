@@ -1,6 +1,10 @@
 {
   "name": "fake-pinterest",
   "version": "1.0.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lordscales91/fake-pinterest.git"
+  },
   "description": "A Pinterest-like sandbox enviroment",
   "main": "app.js",
   "keywords": [
@@ -8,11 +12,19 @@
     "pinterest"
   ],
   "scripts": {
-  	"start":"node app.js"
+    "start": "node app.js"
   },
   "author": "Lordscales91",
-  "license": "Apache 2.0",
+  "license": "Apache-2.0",
   "dependencies": {
-    "express": "4.16.3"
+    "express": "4.16.3",
+    "numeral": "2.0.6",
+    "pg": "7.4.1",
+    "pg-hstore": "2.3.2",
+    "sequelize": "4.37.6",
+    "sequelize-cli": "4.0.0"
+  },
+  "devDependencies": {
+    "mysql2": "1.5.3"
   }
 }

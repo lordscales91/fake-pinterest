@@ -15,4 +15,4 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/v1', apiRouter);
 
 
-app.listen(PORT, () => console.log('Server listening on port ${PORT}!'));
+app.listen(PORT, () => console.log('Server listening on port '+PORT+'!'));
