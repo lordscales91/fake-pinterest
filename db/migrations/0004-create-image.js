@@ -21,17 +21,9 @@ module.exports = {
       source: {
         type: Sequelize.STRING
       },
-      sourceType: {
+      source_type: {
     	defaultValue: 'URL',
         type: Sequelize.STRING
-      },
-      createdAt: {
-        allowNull: false,
-        type: Sequelize.DATE
-      },
-      updatedAt: {
-        allowNull: false,
-        type: Sequelize.DATE
       }
     });
   },

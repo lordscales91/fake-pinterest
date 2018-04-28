@@ -14,17 +14,19 @@ module.exports = (sequelize, DataTypes) => {
       source: {
         type: DataTypes.STRING
       },
-      sourceType: {
+      source_type: {
     	defaultValue: 'URL',
         type: DataTypes.STRING
-      },
-      createdAt: {
-        allowNull: false,
-        type: DataTypes.DATE
       }
-  }, {});
+  }, { underscored: true, timestamps: false });
   Image.associate = function(models) {
-    // associations can be defined here
+    Image.belongsToMany(models.User, {
+    	through: {
+    		model: models.ImageRelation,
+    		unique: false
+    	},
+    	foreignKey: 'image_id'
+  });
   };
   return Image;
 };
