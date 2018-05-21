@@ -3,17 +3,19 @@ var utils = require('../../utils');
 
 module.exports = (sequelize, DataTypes) => {
   var Board = sequelize.define('Board', {
-    id: {
-		allowNull: false,
-        autoIncrement: true,
-        primaryKey: true,
-		type: DataTypes.INTEGER,
-		get() {
-			return utils.formatId(this.getDataValue('id'));
-		}
-	},
-    name: DataTypes.STRING,
-    url: DataTypes.STRING,
+		name: {
+			allowNull: false,
+			type:DataTypes.STRING,
+			set(val) {
+				this.setDataValue('name', val);
+				if(val) {
+					this.setDataValue('machine_name', encodeURIComponent(val.toLowerCase().replace(' ', '-')));
+				}
+			}
+		},
+		machine_name: {
+			type: DataTypes.STRING
+		},
     description: DataTypes.TEXT,
     created_at: {
     	allowNull: false,
@@ -34,7 +36,21 @@ module.exports = (sequelize, DataTypes) => {
     	foreignKey: {
     		allowNull: false
     	}
-    });
-  };
+		});
+		Board.hasMany(models.Pin, {as: 'pins'})
+		Board.belongsToMany(models.Image, {
+			through: {
+				model: models.ImageRelation,
+				unique: false,
+				scope: { owner_type: 'board' }
+			},
+			foreignKey: 'owner_id',
+    	constraints: false
+		});
+	};
+	
+	// Used to sanitize user input by defining the allowed fields to include
+	Board.inputFields = ['id', 'name', 'url', 'description', 'creator', 'created_at', 'counts', 'image'];
+
   return Board;
 };

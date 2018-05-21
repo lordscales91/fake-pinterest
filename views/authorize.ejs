@@ -1,7 +1,22 @@
 <!DOCTYPE html>
 <html>
-<head><title>OAuth authorization page</title></head>
+<%-include('includes/head', {page_title: 'OAuth Authorization'}) %>
 <body>
-	<p>TODO: Design OAuth page</p>
+  <div class="container mt-3">
+    <p>TODO: Implement OAuth </p>
+    <form action="/oauth" method="POST">
+      <p>Requested scopes: </p>
+      <ul>
+        <% requested_scopes.forEach(function(scope) { %>
+        <li> <%=scope %> </li>
+        <% }); %>
+      </ul>
+      <input name="client_id" type="hidden" value="<%=client_id %>"/>
+      <input name="response_type" type="hidden" value="<%=response_type %>"/>
+      <input id="app_allowed" name="allowed" type="hidden" value="true"/>
+      <button class="btn btn-danger" type="submit" onclick="setValueToInput('app_allowed', 'false')">Deny</button>
+      <button class="btn btn-primary" type="submit" onclick="setValueToInput('app_allowed', 'true')">Allow</button>
+    </form>
+  </div>
 </body>
 </html>

@@ -9,9 +9,11 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       name: {
+        allowNull: false,
         type: Sequelize.STRING
       },
-      url: {
+      machine_name: {
+        allowNull: false,
         type: Sequelize.STRING
       },
       description: {

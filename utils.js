@@ -39,15 +39,33 @@ module.exports = {
 		}
 		return pass;
 	},
-	wrapInData: function(obj, fields, pagination) {
-		var dataObj = {};
+	wrapObject: function(obj, fields, options) {
+		var itemObj = {};
+		// console.log('Object keys: '+Object.keys(obj));
+		// console.log('Constructor: '+obj.constructor);
 		Object.keys(obj).forEach(prop => {
 			if(!fields || fields && fields.indexOf(prop) > -1) {
-				dataObj[prop] = obj[prop];
+				var val = obj[prop];
+				if(options && options.formatId && prop === options.formatId) {
+					val = this.formatId(val);
+				}
+				itemObj[prop] = val;
 			}
 		});
+		return itemObj;
+	},
+	wrapInData: function(obj, fields, options) {
+		var dataObj = {};
+		if(options && options.isCollection) {
+			dataObj =  [];
+			obj.forEach(item => {
+				dataObj.push(this.wrapObject(item, fields, options));
+			});
+		} else {
+			dataObj = this.wrapObject(obj, fields, options);
+		}
 		var result = {data: dataObj};
-		if(pagination) {
+		if(options && options.pagination) {
 			result.page = pagination;
 		}
 		return result;

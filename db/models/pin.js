@@ -3,18 +3,11 @@ var utils = require('../../utils');
 
 module.exports = (sequelize, DataTypes) => {
   var Pin = sequelize.define('Pin', {
-    id: {
-    	allowNull: false,
-        autoIncrement: true,
-        primaryKey: true,
-		type: DataTypes.INTEGER,
-		get() {
-			return utils.formatId(this.getDataValue('id'));
-		}
-    },
     link: DataTypes.STRING,
-    url: DataTypes.STRING,
-    note: DataTypes.STRING,
+    note: {
+      allowNull: false,
+      type:DataTypes.STRING
+    },
     color: DataTypes.STRING,
     created_at: {
     	allowNull: false,
@@ -31,7 +24,11 @@ module.exports = (sequelize, DataTypes) => {
 	  createdAt: 'created_at'
   });
   Pin.associate = function(models) {
-    // associations can be defined here
+    Pin.belongsTo(models.Board, {
+      foreignKey: {
+        allowNull: false
+      }
+    })
   };
   return Pin;
 };

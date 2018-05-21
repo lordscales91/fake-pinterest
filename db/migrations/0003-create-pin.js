@@ -11,10 +11,8 @@ module.exports = {
       link: {
         type: Sequelize.STRING
       },
-      url: {
-        type: Sequelize.STRING
-      },
       note: {
+        allowNull: false,
         type: Sequelize.STRING
       },
       color: {
@@ -23,6 +21,14 @@ module.exports = {
       created_at: {
         allowNull: false,
         type: Sequelize.DATE
+      },
+      board_id: {
+        allowNull: false,
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'Boards',
+          key: 'id'
+        }
       }
     });
   },

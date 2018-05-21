@@ -17,10 +17,12 @@
   "author": "Lordscales91",
   "license": "Apache-2.0",
   "dependencies": {
+    "ejs": "2.5.9",
     "express": "4.16.3",
     "numeral": "2.0.6",
     "pg": "7.4.1",
     "pg-hstore": "2.3.2",
+    "bluebird": "3.5.1",
     "sequelize": "4.37.6",
     "sequelize-cli": "4.0.0"
   },

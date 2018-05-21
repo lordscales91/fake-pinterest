@@ -26,7 +26,7 @@ module.exports = (sequelize, DataTypes) => {
     		unique: false
     	},
     	foreignKey: 'image_id'
-  });
+    });
   };
   return Image;
 };

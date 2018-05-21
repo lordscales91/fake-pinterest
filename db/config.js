@@ -9,6 +9,14 @@ module.exports = {
     dialect: "mysql",
     operatorsAliases: Sequelize.Op
   },
+  local_production: {
+    username: "postgres",
+    password: "abc123.",
+    database: "fake_pinterest",
+    host: "127.0.0.1",
+    dialect: "postgres",
+    operatorsAliases: Sequelize.Op
+  },
   test: {
     username: "root",
     password: null,

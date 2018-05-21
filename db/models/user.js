@@ -3,16 +3,6 @@ var utils = require('../../utils');
 
 module.exports = (sequelize, DataTypes) => {
   var User = sequelize.define('User', {
-	id: {
-		allowNull: false,
-        autoIncrement: true,
-        primaryKey: true,
-		type: DataTypes.INTEGER,
-		get() {
-			
-			return utils.formatId(this.getDataValue('id'));
-		}
-	},
 	username: {
 		allowNull: false,
 		unique: true,
@@ -63,10 +53,7 @@ module.exports = (sequelize, DataTypes) => {
 	underscored: true,
 	timestamps: true,
 	updatedAt: false,
-	createdAt: 'created_at',
-	defaultScope: {
-		attributes: ['first_name', 'last_name', 'id', 'username']
-	}
+	createdAt: 'created_at'
   });
   User.associate = function(models) {
     User.belongsToMany(models.Image, {
@@ -77,7 +64,53 @@ module.exports = (sequelize, DataTypes) => {
     	},
     	foreignKey: 'owner_id',
     	constraints: false
-    });
+	});
+	User.hasMany(models.Board, {as: 'boards'});
+	User.belongsToMany(models.User, {
+		through: {
+			model: models.FollowRelation,
+			unique: false,
+			scope: { target_type: 'user' }
+		},
+		as: 'Following',
+		foreignKey: 'follower_id',
+		constraints: false
+	});
+	User.belongsToMany(models.User, {
+		through: {
+			model: models.FollowRelation,
+			unique: false,
+			scope: { target_type: 'user' }
+		},
+		as: 'Followers',
+		foreignKey: 'followable_id',
+		constraints: false
+	});
+	
+	User.belongsToMany(models.Board, {
+		through: {
+			model: models.FollowRelation,
+			unique: false,
+			scope: { target_type: 'board' }
+		},
+		as: 'FollowingBoards',
+		foreignKey: 'follower_id',
+		otherKey: 'followable_id',
+		constraints: false
+	});
+	
+	User.belongsToMany(models.Interest, {
+		through: {
+			model: models.FollowRelation,
+			unique: false,
+			scope: { target_type: 'interest' }
+		},
+		as: 'Interests',
+		foreignKey: 'follower_id',
+		otherKey: 'followable_id',
+		constraints: false
+	});
+	
   };
   
   // Used to sanitize user input by defining the allowed fields to include
